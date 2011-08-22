@@ -2,20 +2,20 @@
 <rss version="2.0">
 <channel>
 <title>Deesec Blog</title>
-<link>http://deesec.com/index.html</link>
+<link>http://deepbit.github.com/index.html</link>
 <description>general_programming=['python', 'java', 'android', 'security', 'hacking', 'bioinformatics']</description>
 <language>en-us</language>
-<pubDate>Mon, 22 Aug 2011 21:23:24 -0000</pubDate>
-<lastBuildDate>Mon, 22 Aug 2011 21:23:24 -0000</lastBuildDate>
+<pubDate>Mon, 22 Aug 2011 22:56:14 -0000</pubDate>
+<lastBuildDate>Mon, 22 Aug 2011 22:56:14 -0000</lastBuildDate>
 <docs>http://blogs.law.harvard.edu/tech/rss</docs>
 <generator>Poole</generator>
 
 <item>
 	<title>WeBreak and secHttp</title>
-	<link>http://deesec.com/index.2011-08-22.WeBreak_and_secHttp.html</link>
+	<link>http://deepbit.github.com/index.2011-08-22.WeBreak_and_secHttp.html</link>
 	<description>This is a brief introduction to WeBreak and the very first module secHttp (A HTTP protocol Security Abstraction)</description>
 	<pubDate>Mon, 22 Aug 2011 11:00:00 -0000</pubDate>
-	<guid>http://deesec.com/index.2011-08-22.WeBreak_and_secHttp.html</guid>
+	<guid>http://deepbit.github.com/index.2011-08-22.WeBreak_and_secHttp.html</guid>
 </item>
 
 </channel>
