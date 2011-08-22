@@ -1,0 +1,200 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+		<title>index</title>
+	</head>
+
+	<body>
+		<div id="content">
+		<div class="titlebar">
+		<h2>DeeSec</h2>
+		<p class="slogan">Inventing, creating, ...</p>
+		</div>
+		<div class="sidebar">
+		<div class="about">
+		<h2>about</h2>
+		<p>In this site/blog you will be able to find some funny projects and crazy ideas about computer science.</p>
+		<p>Status: Starting to develop new ideas ;)</p>
+		<p>Updated: Aug 22th 2011 - 18:20</p>
+		</p>
+		</div>
+		<h2>browse here!</h2>
+		<ul>
+    <li><a href="/index.html">Blog</a></li>
+<li><a href="/projecs.html">Projects</a></li>
+		</ul>
+		</div>
+		<div class="text">
+		<p class="date">Updated August 22th 2011</p><h2><a href="#">WeBreak and secHttp</a></h2><p class="info">by: deepbit</p>
+
+<p>After a long time of inactivity, I deciced to work on my old
+tools and try to improve them. I just joined Github in the
+last days and I'd like to share my work with this community.</p>
+<p>WeBreak was a project that I started on
+<a href="http://code.google.com/p/webreak
+/">code.google.com/p/webreak</a>, but it was only a very first version (BETA), with plenty
+of bugs and not very efficient.</p>
+<p>Now, my goals are to improve each of the modules I have
+developed in the last years, and publish them as different
+projects, and join them all together in WeBreak.</p>
+<p>These modules are:</p>
+<ul>
+<li>Http engine</li>
+<li>MITM Proxy (based on <a href="http://www.oki-osk.jp/esc/python/proxy/">Tiny HTTP Proxy</a>)</li>
+<li>SQL Injection engine (based on sqPyfia)</li>
+<li>XSS Module (based on Gazpacio)</li>
+</ul>
+<p>I'll develop more modules depending on my availability but
+the purpose is that the comunity can extend and add modules
+by using a plugin engine.</p>
+<p>In this post, I'm going to introduce sechttp, 'a Security
+HTTP protocol abstraction'.</p>
+<p>I used to work with reqresp.py in ProxyStrike and WeBreak,
+this was a dirty wrap on PyCurl, but worked fine. However,
+it had a lack of flexibility, compatibility and dependency.</p>
+<p>Now I have been overviewing some projects aiming to replace
+python standard httplib module, in order to work on my Http
+wrapper:</p>
+<ul>
+<li><a href="http://pypi.python.org/pypi/requests/">Requests</a></li>
+<li><a href="http://code.google.com/p/httplib2/">httplib2</a></li>
+<li><a href="http://pycurl.sourceforge.net/">PyCurl</a></li>
+</ul>
+<p>So the goals of my Http-Wrap are the following:</p>
+<ul>
+<li>Multi-Engine (pycurl, httplib, httplib2, any engine)</li>
+<li>Usable on any version of python.</li>
+<li>With no dependencies</li>
+<li>Better performance (than the father reqresp)</li>
+</ul>
+<p>So that's my first version of sechttp, using httlib2 as
+http engine. You can download it from the <a href="https://github.com/deepbit/WeBreak">WeBreak project
+site</a></p>
+<p>or typing:</p>
+<pre><code>git clone git://github.com/deepbit/WeBreak.git
+</code></pre>
+<p>I'll show some examples on how to use sechttp: <a href="/doc/sechttp/index.html">Full documentation</a></p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sechttp</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="n">HttpReq</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">setUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.es&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">getAll</span><span class="p">()</span>       <span class="c"># Get raw http response</span>
+<span class="s">&#39;HTTP/1.1 200 OK</span><span class="se">\r\r\n</span><span class="s">X-Xss-Protection: 1; mode=block</span><span class="se">\r\n</span><span class="s">Content-Location: http://www.google.es</span><span class="se">\r\n</span><span class="s">Set-Cookie: PREF=ID=eb26cdebfa62dcc9:FF=0:TM=1314017508:...&#39;</span>
+
+<p><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span> <span class="n">response</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>      <span class="c"># get Html</span>
+<span class="s">&#39;&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta http-equiv=&quot;content-type&quot; content= &quot;text/html; charset=ISO-8859-1&quot;&gt;&lt;title&gt;Google&lt;/title&gt;&lt;script&gt;window.  google={kEI:&quot;5 FBSTuPeJce...&#39;</span> </p>
+<p><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">setPostData</span><span class="p">(</span><span class="s">&quot;a=b&amp;c=d&quot;</span><span class="p">)</span>    <span class="c"># Setting POST data</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span></p>
+<p><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">setMethod</span><span class="p">(</span><span class="s">&quot;HEAD&quot;</span><span class="p">)</span>         <span class="c"># Performing a HEAD request</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>  <br />
+</pre></div></p>
+<p>secHttp has a connection manager thar provides threading
+mechanisms. By default it uses only one thread:</p>
+<pre><code>HttpReq &lt;==&gt;  HttpReq(CMRG=HttpCMgr(threads=1,proxyinfo=None))
+</code></pre>
+<p>If you want to work using a proxy or using threads the
+connection manager makes the hard job:</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">cm</span><span class="o">=</span><span class="n">HttpCMgr</span><span class="p">(</span><span class="mi">20</span><span class="p">,(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span><span class="mi">8000</span><span class="p">))</span> <span class="c"># 20 threads and proxy=localhost:8000</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">400</span><span class="p">):</span>
+<span class="o">...</span>  <span class="n">a</span><span class="o">=</span><span class="n">HttpReq</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
+<span class="o">...</span>  <span class="n">a</span><span class="o">.</span><span class="n">setUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.com/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="c"># Silly fuzzing on goole :D</span>
+<span class="o">...</span>  <span class="n">a</span><span class="o">.</span><span class="n">performMulti</span><span class="p">()</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cm</span><span class="o">.</span><span class="n">waitMulti</span><span class="p">()</span>  <span class="c"># We wait to finish all the Asynch requests, but... where are the requests???</span>
+</pre></div>
+
+<p>To manage the requests and responses using threads, you can
+use a callback function, called every time a request is
+performed:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sechttp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<p><span class="c">#req: Original request</span>
+<span class="c">#resp: Response received</span>
+<span class="c">#info: additional info passed to parformMulti</span>
+<span class="c">#except: If there was an error performing, excep will be the exception</span>
+<span class="k">def</span> <span class="nf">callbackfunc</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="n">resp</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">excep</span><span class="p">):</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="n">resp</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">excep</span><span class="p">)</span></p>
+<p><span class="n">cm</span><span class="o">=</span><span class="n">HttpCMgr</span><span class="p">(</span><span class="mi">5</span><span class="p">,(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span><span class="mi">8000</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">HttpReq</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">setUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.com/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="c"># don&#39;t do that on google or you&#39;ll be banned xD</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">performMulti</span><span class="p">(</span><span class="n">callbackfunc</span><span class="p">,</span><span class="s">&quot;I fuzzed a &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span></p>
+<p><span class="n">cm</span><span class="o">.</span><span class="n">waitMulti</span><span class="p">()</span></p>
+<p><span class="n">OUTPUT</span></p>
+<p><span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b30e0</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x10054aa50</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 0&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b3878</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x100558790</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 3&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b3c20</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x100558810</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 4&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b3638</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x10054a650</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 2&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b33f8</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x1006069d0</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 1&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b3f80</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x100558710</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 5&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b6830</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x100558310</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 7&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b6c20</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x100558690</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 8&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b6440</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x100558b90</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 6&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">HttpReq</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x1010b6f80</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">sechttp</span><span class="o">.</span><span class="n">Response</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x100558510</span><span class="o">&gt;</span><span class="p">,</span> <span class="s">&#39;I fuzzed a 9&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div></p>
+<p>Another secHttp feature and for me the most important one,
+is the variable management, check it out:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sechttp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<p><span class="n">a</span><span class="o">=</span><span class="n">HttpReq</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">setUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.com/a=b/c=d/index.php?f=g&amp;h=i&quot;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;cookie&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;PREF=ID=4d7bb73474ba3cba:FF=0:TM=1313841329:LM=1313841329:S=SpzoOJmiQPwT-pQy; expires=Mon, 19-Aug-2013 11:55:29 GMT; path=/; domain=.google.es, NID=50=YX7YGuYPCREAT5rHTPYV1ck0CAqBFpHL2rvuV8o-K-IadDF9B2fJbdAl5EmFfOb_qyuJ5cF0HEyXP6anAJTzJGEtqbh0RGNvFdzAzvYJyDzDflqsTM9k9OPOw8A3zKjs; expires=Sun, 19-Feb-2012 11:55:29 GMT; path=/; domain=.google.es; HttpOnly&quot;</span>
+<span class="n">a</span><span class="o">.</span><span class="n">setPostData</span><span class="p">(</span><span class="s">&quot;var1=A&amp;var2=B&quot;</span><span class="p">)</span></p>
+<p><span class="k">print</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">getAll</span><span class="p">())</span>
+<span class="k">print</span> <span class="p">(</span><span class="s">&quot;=====================&quot;</span><span class="p">)</span></p>
+<p><span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">getVars</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">&quot;Name: {0}, Value: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">i</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+<span class="k">print</span> <span class="p">(</span><span class="s">&quot;=====================&quot;</span><span class="p">)</span></p>
+<p><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)):</span>
+    <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;-RUBBISH&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">getAll</span><span class="p">())</span>
+<span class="k">print</span> <span class="p">(</span><span class="s">&quot;=====================&quot;</span><span class="p">)</span></p>
+<p><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+    <span class="n">i</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">getAll</span><span class="p">())</span></p>
+<p><span class="n">OUTPUT</span></p>
+<p><span class="n">POST</span> <span class="o">/</span><span class="n">a</span><span class="o">=</span><span class="n">b</span><span class="o">/</span><span class="n">c</span><span class="o">=</span><span class="n">d</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="err">?</span><span class="n">f</span><span class="o">=</span><span class="n">g</span><span class="o">&amp;</span><span class="n">h</span><span class="o">=</span><span class="n">i</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Cookie</span><span class="p">:</span> <span class="n">PREF</span><span class="o">=</span><span class="n">ID</span><span class="o">=</span><span class="mi">4</span><span class="n">d7bb73474ba3cba</span><span class="p">:</span><span class="n">FF</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">TM</span><span class="o">=</span><span class="mi">1313841329</span><span class="p">:</span><span class="n">LM</span><span class="o">=</span><span class="mi">1313841329</span><span class="p">:</span><span class="n">S</span><span class="o">=</span><span class="n">SpzoOJmiQPwT</span><span class="o">-</span><span class="n">pQy</span><span class="p">;</span> <span class="n">expires</span><span class="o">=</span><span class="n">Mon</span><span class="p">,</span> <span class="mi">19</span><span class="o">-</span><span class="n">Aug</span><span class="o">-</span><span class="mi">2013</span> <span class="mi">11</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">29</span> <span class="n">GMT</span><span class="p">;</span> <span class="n">path</span><span class="o">=/</span><span class="p">;</span> <span class="n">domain</span><span class="o">=.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span><span class="p">,</span> <span class="n">NID</span><span class="o">=</span><span class="mi">50</span><span class="o">=</span><span class="n">YX7YGuYPCREAT5rHTPYV1ck0CAqBFpHL2rvuV8o</span><span class="o">-</span><span class="n">K</span><span class="o">-</span><span class="n">IadDF9B2fJbdAl5EmFfOb_qyuJ5cF0HEyXP6anAJTzJGEtqbh0RGNvFdzAzvYJyDzDflqsTM9k9OPOw8A3zKjs</span><span class="p">;</span> <span class="n">expires</span><span class="o">=</span><span class="n">Sun</span><span class="p">,</span> <span class="mi">19</span><span class="o">-</span><span class="n">Feb</span><span class="o">-</span><span class="mi">2012</span> <span class="mi">11</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">29</span> <span class="n">GMT</span><span class="p">;</span> <span class="n">path</span><span class="o">=/</span><span class="p">;</span> <span class="n">domain</span><span class="o">=.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span><span class="p">;</span> <span class="n">HttpOnly</span></p>
+<p><span class="n">var1</span><span class="o">=</span><span class="n">A</span><span class="o">&amp;</span><span class="n">var2</span><span class="o">=</span><span class="n">B</span>
+<span class="o">=====================</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">c</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">d</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">b</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">h</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">i</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">f</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">g</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">var2</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">B</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">var1</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">A</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">domain</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="o">/</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">expires</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">Sun</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">NID</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">YX7YGuYPCREAT5rHTPYV1ck0CAqBFpHL2rvuV8o</span><span class="o">-</span><span class="n">K</span><span class="o">-</span><span class="n">IadDF9B2fJbdAl5EmFfOb_qyuJ5cF0HEyXP6anAJTzJGEtqbh0RGNvFdzAzvYJyDzDflqsTM9k9OPOw8A3zKjs</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">domain</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="o">/</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">expires</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">Mon</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="n">SpzoOJmiQPwT</span><span class="o">-</span><span class="n">pQy</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">LM</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="mi">1313841329</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">TM</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="mi">1313841329</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">FF</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">PREF</span><span class="o">=</span><span class="n">ID</span><span class="p">,</span> <span class="n">Value</span><span class="p">:</span> <span class="mi">4</span><span class="n">d7bb73474ba3cba</span>
+<span class="o">=====================</span>
+<span class="n">POST</span> <span class="o">/</span><span class="n">a</span><span class="o">=</span><span class="n">b</span><span class="o">-</span><span class="n">RUBBISH</span><span class="o">/</span><span class="n">c</span><span class="o">=</span><span class="n">d</span><span class="o">-</span><span class="n">RUBBISH</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="err">?</span><span class="n">f</span><span class="o">=</span><span class="n">g</span><span class="o">-</span><span class="n">RUBBISH</span><span class="o">&amp;</span><span class="n">h</span><span class="o">=</span><span class="n">i</span><span class="o">-</span><span class="n">RUBBISH</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Cookie</span><span class="p">:</span> <span class="n">PREF</span><span class="o">=</span><span class="n">ID</span><span class="o">=</span><span class="mi">4</span><span class="n">d7bb73474ba3cba</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">:</span><span class="n">FF</span><span class="o">=</span><span class="mi">0</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">:</span><span class="n">TM</span><span class="o">=</span><span class="mi">1313841329</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">:</span><span class="n">LM</span><span class="o">=</span><span class="mi">1313841329</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">:</span><span class="n">S</span><span class="o">=</span><span class="n">SpzoOJmiQPwT</span><span class="o">-</span><span class="n">pQy</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">;</span> <span class="n">expires</span><span class="o">=</span><span class="n">Mon</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">,</span> <span class="mi">19</span><span class="o">-</span><span class="n">Aug</span><span class="o">-</span><span class="mi">2013</span> <span class="mi">11</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">29</span> <span class="n">GMT</span><span class="p">;</span> <span class="n">path</span><span class="o">=/-</span><span class="n">RUBBISH</span><span class="p">;</span> <span class="n">domain</span><span class="o">=.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">,</span> <span class="n">NID</span><span class="o">=</span><span class="mi">50</span><span class="o">=</span><span class="n">YX7YGuYPCREAT5rHTPYV1ck0CAqBFpHL2rvuV8o</span><span class="o">-</span><span class="n">K</span><span class="o">-</span><span class="n">IadDF9B2fJbdAl5EmFfOb_qyuJ5cF0HEyXP6anAJTzJGEtqbh0RGNvFdzAzvYJyDzDflqsTM9k9OPOw8A3zKjs</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">;</span> <span class="n">expires</span><span class="o">=</span><span class="n">Sun</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">,</span> <span class="mi">19</span><span class="o">-</span><span class="n">Feb</span><span class="o">-</span><span class="mi">2012</span> <span class="mi">11</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">29</span> <span class="n">GMT</span><span class="p">;</span> <span class="n">path</span><span class="o">=/-</span><span class="n">RUBBISH</span><span class="p">;</span> <span class="n">domain</span><span class="o">=.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span><span class="o">-</span><span class="n">RUBBISH</span><span class="p">;</span> <span class="n">HttpOnly</span></p>
+<p><span class="n">var1</span><span class="o">=</span><span class="n">A</span><span class="o">-</span><span class="n">RUBBISH</span><span class="o">&amp;</span><span class="n">var2</span><span class="o">=</span><span class="n">B</span><span class="o">-</span><span class="n">RUBBISH</span>
+<span class="o">=====================</span>
+<span class="n">POST</span> <span class="o">/</span><span class="n">a</span><span class="o">=</span><span class="n">b</span><span class="o">/</span><span class="n">c</span><span class="o">=</span><span class="n">d</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="err">?</span><span class="n">f</span><span class="o">=</span><span class="n">g</span><span class="o">&amp;</span><span class="n">h</span><span class="o">=</span><span class="n">i</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Cookie</span><span class="p">:</span> <span class="n">PREF</span><span class="o">=</span><span class="n">ID</span><span class="o">=</span><span class="mi">4</span><span class="n">d7bb73474ba3cba</span><span class="p">:</span><span class="n">FF</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">TM</span><span class="o">=</span><span class="mi">1313841329</span><span class="p">:</span><span class="n">LM</span><span class="o">=</span><span class="mi">1313841329</span><span class="p">:</span><span class="n">S</span><span class="o">=</span><span class="n">SpzoOJmiQPwT</span><span class="o">-</span><span class="n">pQy</span><span class="p">;</span> <span class="n">expires</span><span class="o">=</span><span class="n">Mon</span><span class="p">,</span> <span class="mi">19</span><span class="o">-</span><span class="n">Aug</span><span class="o">-</span><span class="mi">2013</span> <span class="mi">11</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">29</span> <span class="n">GMT</span><span class="p">;</span> <span class="n">path</span><span class="o">=/</span><span class="p">;</span> <span class="n">domain</span><span class="o">=.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span><span class="p">,</span> <span class="n">NID</span><span class="o">=</span><span class="mi">50</span><span class="o">=</span><span class="n">YX7YGuYPCREAT5rHTPYV1ck0CAqBFpHL2rvuV8o</span><span class="o">-</span><span class="n">K</span><span class="o">-</span><span class="n">IadDF9B2fJbdAl5EmFfOb_qyuJ5cF0HEyXP6anAJTzJGEtqbh0RGNvFdzAzvYJyDzDflqsTM9k9OPOw8A3zKjs</span><span class="p">;</span> <span class="n">expires</span><span class="o">=</span><span class="n">Sun</span><span class="p">,</span> <span class="mi">19</span><span class="o">-</span><span class="n">Feb</span><span class="o">-</span><span class="mi">2012</span> <span class="mi">11</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">29</span> <span class="n">GMT</span><span class="p">;</span> <span class="n">path</span><span class="o">=/</span><span class="p">;</span> <span class="n">domain</span><span class="o">=.</span><span class="n">google</span><span class="o">.</span><span class="n">es</span><span class="p">;</span> <span class="n">HttpOnly</span></p>
+<p><span class="n">var1</span><span class="o">=</span><span class="n">A</span><span class="o">&amp;</span><span class="n">var2</span><span class="o">=</span><span class="n">B</span>
+</pre></div></p>
+		<div class="footer">&copy; 2011 deepbit | Design by Ethan Neuenswander | Powered by Poole </div>
+
+		</div>
+		</div>
+				
+	</body>
+
+</html>

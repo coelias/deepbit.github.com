@@ -1,0 +1,43 @@
+.. secHttp documentation master file, created by
+   sphinx-quickstart on Mon Aug 22 16:16:37 2011.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+secHttp (a HTTP protocol security abstraction)
+=================================================
+
+:Author: Carlos del Ojo Elias (deepbit_at_gmail.com)
+
+Contents:
+
+.. toctree::
+      :maxdepth: 2
+
+HttpCMgr Objects (Connection manager)
+=====================================
+
+.. autoclass:: sechttp.HttpCMgr
+   :members:
+
+HttpReq Objects (Http Request)
+=====================================
+.. autoclass:: sechttp.HttpReq
+   :members:
+
+Response Objects 
+=====================================
+.. autoclass:: sechttp.Response
+   :members:
+
+Variable Objects 
+=====================================
+.. autoclass:: sechttp.Variable
+   :members:
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

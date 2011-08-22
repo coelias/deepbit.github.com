@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>secHttp (a HTTP protocol security abstraction) &mdash; secHttp v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="secHttp v0.1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">secHttp v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sechttp-a-http-protocol-security-abstraction">
+<h1>secHttp (a HTTP protocol security abstraction)<a class="headerlink" href="#sechttp-a-http-protocol-security-abstraction" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">Carlos del Ojo Elias (deepbit_at_gmail.com)</td>
+</tr>
+</tbody>
+</table>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+<div class="section" id="httpcmgr-objects-connection-manager">
+<h1>HttpCMgr Objects (Connection manager)<a class="headerlink" href="#httpcmgr-objects-connection-manager" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sechttp.HttpCMgr">
+<em class="property">class </em><tt class="descclassname">sechttp.</tt><tt class="descname">HttpCMgr</tt><big>(</big><em>threads=1</em>, <em>proxyinfo=None</em><big>)</big><a class="headerlink" href="#sechttp.HttpCMgr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connection Manager: Used by any HttpReq Object in order to create http connections. It&#8217;s a wrapper of any other HTTP engine, like PyCurl, Httplib2, Requests, or any other</p>
+<dl class="method">
+<dt id="sechttp.HttpCMgr.setThreads">
+<tt class="descname">setThreads</tt><big>(</big><em>threads</em><big>)</big><a class="headerlink" href="#sechttp.HttpCMgr.setThreads" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you want to change the number of threads while running, this function lets you increase or decrease the amount of threads.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpCMgr.waitMulti">
+<tt class="descname">waitMulti</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.HttpCMgr.waitMulti" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to wait until all threads finish to process all the requests.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="httpreq-objects-http-request">
+<h1>HttpReq Objects (Http Request)<a class="headerlink" href="#httpreq-objects-http-request" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sechttp.HttpReq">
+<em class="property">class </em><tt class="descclassname">sechttp.</tt><tt class="descname">HttpReq</tt><big>(</big><em>CMGR=None</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Http request Object, it uses a Connection Manager by default with only one thread and no proxy.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>urlWithoutVariables</li>
+<li>pathWithVariables</li>
+<li>completeUrl</li>
+<li>urlWithoutPath</li>
+<li>path</li>
+<li>response</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="sechttp.HttpReq.getAll">
+<tt class="descname">getAll</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.HttpReq.getAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the RAW request, Heading, headers and body</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.getAuth">
+<tt class="descname">getAuth</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.HttpReq.getAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the authentication provided in a tuple (u,p,d)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.getVars">
+<tt class="descname">getVars</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.HttpReq.getVars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all detected variables inside the request in a list of sechttp.Variable Objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.parseRequest">
+<tt class="descname">parseRequest</tt><big>(</big><em>rawreq</em>, <em>scheme</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq.parseRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a RAW request in a string and overwrites the current object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.perform">
+<tt class="descname">perform</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.HttpReq.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the request, then you can access the response through the response attribute</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.performMulti">
+<tt class="descname">performMulti</tt><big>(</big><em>callback=None</em>, <em>info=None</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq.performMulti" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to perform threaded requests. You can specify a callback function callen when the connection manager finishes the request and additional info tied to the request.</p>
+<dl class="docutils">
+<dt>Callback function header: def callbackfunc(req,resp,info,excep):</dt>
+<dd><ul class="first last simple">
+<li>req: Original request</li>
+<li>resp: Response</li>
+<li>info: info provided by HttpReq.performMulti()</li>
+<li>excep: Exception object if the request failed</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.setAuth">
+<tt class="descname">setAuth</tt><big>(</big><em>user</em>, <em>passwd</em>, <em>domain=''</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq.setAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set user password and an optional domain for authentication</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.setMethod">
+<tt class="descname">setMethod</tt><big>(</big><em>met</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq.setMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the method if you want to use another different from [&#8216;POST&#8217;,&#8217;GET&#8217;] (like &#8216;HEAD&#8217; or &#8216;PUT&#8217;)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.setPostData">
+<tt class="descname">setPostData</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq.setPostData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add Post data to the request</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.setRedirect">
+<tt class="descname">setRedirect</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq.setRedirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number on redirections to follow and avoiding an infinite loop (2 by default)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.HttpReq.setUrl">
+<tt class="descname">setUrl</tt><big>(</big><em>urltmp</em><big>)</big><a class="headerlink" href="#sechttp.HttpReq.setUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the URL you want to make the request</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="response-objects">
+<h1>Response Objects<a class="headerlink" href="#response-objects" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sechttp.Response">
+<em class="property">class </em><tt class="descclassname">sechttp.</tt><tt class="descname">Response</tt><big>(</big><em>protocol=''</em>, <em>code=''</em>, <em>message=''</em><big>)</big><a class="headerlink" href="#sechttp.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTTP Response Object
+Attributes:
+* code (status code)
+* message (status message)</p>
+<dl class="method">
+<dt id="sechttp.Response.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Response.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns another Response copy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.getAll">
+<tt class="descname">getAll</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Response.getAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the response, including heading and headers</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.getContent">
+<tt class="descname">getContent</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Response.getContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the content of the response</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.getCookie">
+<tt class="descname">getCookie</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Response.getCookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Cookie.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.getLengthWords">
+<tt class="descname">getLengthWords</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Response.getLengthWords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Length and words in a tuple (l,w)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.getLocation">
+<tt class="descname">getLocation</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Response.getLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Location value if the header was provided.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.getMd5">
+<tt class="descname">getMd5</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Response.getMd5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns md5 of the http response content (html or whatever)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.has_header">
+<tt class="descname">has_header</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#sechttp.Response.has_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if there is the header key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Response.parseResponse">
+<tt class="descname">parseResponse</tt><big>(</big><em>rawResponse</em><big>)</big><a class="headerlink" href="#sechttp.Response.parseResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a Raw response from a string and replaces the current object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="variable-objects">
+<h1>Variable Objects<a class="headerlink" href="#variable-objects" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sechttp.Variable">
+<em class="property">class </em><tt class="descclassname">sechttp.</tt><tt class="descname">Variable</tt><big>(</big><em>name</em>, <em>value=''</em>, <em>eq='='</em>, <em>extraInfo=''</em><big>)</big><a class="headerlink" href="#sechttp.Variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable Object wich can be modified and recovered.</p>
+<dl class="method">
+<dt id="sechttp.Variable.append">
+<tt class="descname">append</tt><big>(</big><em>val</em><big>)</big><a class="headerlink" href="#sechttp.Variable.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends information to the variable value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Variable.change">
+<tt class="descname">change</tt><big>(</big><em>newval</em><big>)</big><a class="headerlink" href="#sechttp.Variable.change" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permanent change of the value, overwriting the initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Variable.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Variable.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies the current variable and returns a new variable with the same information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Variable.info">
+<tt class="descname">info</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Variable.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of the variable -&gt; [ %s : %s ]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sechttp.Variable.name">
+<tt class="descname">name</tt><a class="headerlink" href="#sechttp.Variable.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable name (or key)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Variable.restore">
+<tt class="descname">restore</tt><big>(</big><big>)</big><a class="headerlink" href="#sechttp.Variable.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the variable to the first value assigned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sechttp.Variable.update">
+<tt class="descname">update</tt><big>(</big><em>val</em><big>)</big><a class="headerlink" href="#sechttp.Variable.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the variable value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sechttp.Variable.value">
+<tt class="descname">value</tt><a class="headerlink" href="#sechttp.Variable.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variable value</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">secHttp (a HTTP protocol security abstraction)</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#httpcmgr-objects-connection-manager">HttpCMgr Objects (Connection manager)</a></li>
+<li><a class="reference internal" href="#httpreq-objects-http-request">HttpReq Objects (Http Request)</a></li>
+<li><a class="reference internal" href="#response-objects">Response Objects</a></li>
+<li><a class="reference internal" href="#variable-objects">Variable Objects</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">secHttp v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Carlos del Ojo Elias.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

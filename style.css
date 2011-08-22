@@ -1,0 +1,105 @@
+/*
+Theme Name: ETC 
+Theme URI: http://www.ethanneuen.com/etc/
+Description: A theme inspired by DaringFireball. 
+[http://www.daringfireball.com]
+Author: Ethan Neuenswander
+Author URI: http://www.ethanneuen.com/
+Version: 1.0
+*/
+
+/*
+Basic Tags
+ */
+body { color: #e3e3e3; font: 10px/150% Verdana, Arial, Sans-Serif; background-color: #4a525a;}
+a { color: #e3e3e3; text-decoration: none; padding: 2px; font-weight:bold;}
+a:hover { color: #e3e3e3; background-color:#606870; }
+p {text-align: justify;}
+/*
+The End of Basic's
+*/
+/* 
+Main Tags; Play Nice with These Ones
+*/
+#content   { background-color: #4a525a; margin: 50px auto auto; width: 700px; height: auto }
+.titlebar {width: 700px; height: auto; background-color: #4a525a; text-align: right; padding-bottom: 1em; margin-right: 10px;}
+.text { width: 430px; height: auto; background-color: #4a525a; text-align: left; padding: 0px; margin:0px; margin-right: 20px; color:inherit; float: left;}
+.sidebar { width: 200px; height: auto; background-color: #4a525a; margin-right: 0px; float: right; text-align: left; }
+.about { width: auto; padding: 10px; background-color: #606870; text-align: left;}
+.footer { width: 430px; text-align: right; font-family: monospace; font-size: 9px; margin: 0px; margin-top: 80px; }
+/*
+Special Function Tags
+*/
+.titlebar p.slogan { font-size: 9px; font-family: monospace; margin: 0px; margin-top:3px; text-transform: capitalize;}
+.text p.date { font-size: 11px; text-align: right; padding-bottom: 3px; padding-top: 3px; background-color: #606870; color: #e3e3e3; padding-right: 5px; margin-bottom: 10px; font-family: monospace;}
+.sidebar li  { list-style-type: none; text-align: left; }
+.titlebar h2  { color: #e3e3e3; font-size: 20px; font-weight: lighter; text-transform: uppercase; margin: 0; }
+.text p.content { color: #e3e3e3; font-size: inherit;}
+.text h2 { color: #e3e3e3; font-size: 12px; text-transform: uppercase; font-weight: lighter; margin: 0px;}
+.text p.info { color: #e3e3e3; font-size: 8px; font-weight: lighter; font-family: monospace; margin: 0px; padding-left: 1em;}
+.sidebar h2 { color: inherit; font-size: 10px; font-weight: lighter; font-family: Verdana; text-transform: uppercase;}
+.footer a:link { color: #e3e3e3; font-size: inherit;}
+
+.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #262b30; border: 1px dotted #859aad; padding: 5px; overflow: auto; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #808080 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+
