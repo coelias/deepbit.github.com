@@ -14,6 +14,7 @@ Basic Tags
 body { color: #e3e3e3; font: 10px/150% Verdana, Arial, Sans-Serif; background-color: #4a525a;}
 a { color: #e3e3e3; text-decoration: none; padding: 2px; font-weight:bold;}
 a:hover { color: #e3e3e3; background-color:#606870; }
+h2 a:hover { background-color:#4a525a; }
 p {text-align: justify;}
 /*
 The End of Basic's
