@@ -1,0 +1,128 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+		<title>uOneCrypt - my data in the cloud?!?!?! Ok, but crypted :)</title>
+	</head>
+
+	<body>
+		<div id="content">
+		<div class="titlebar">
+		<h2>DeeSec <a href=rss.xml><img src=images/RSS.png></a></h2>
+		<p class="slogan">Inventing, creating, ...</p>
+		</div>
+		<div class="sidebar">
+		<div class="about">
+		<h2>about</h2>
+		<p>uOneCrypt - my data in the cloud?!?!?! Ok, but crypted :)</p>
+		<p>Status: Starting to develop new ideas ;)</p>
+		<p>Updated: Oct 07th 2011 - 15:31</p>
+		</p>
+		</div>
+		<h2>browse here!</h2>
+		<ul>
+    <li><a href="/index.html">Blog</a></li>
+<li><a href="/projecs.html">Projects</a></li>
+		</ul>
+		</div>
+		<div class="text">
+		<p class="date">Updated October 05th 2011</p><h2><a href="#">uOneCrypt</a></h2><p class="info">by: deepbit</p>
+
+<p>For along time I've wanted to store lots of my data in internet, since I
+don't trust hard disks for "all" my information.</p>
+<p>The problem was I coudn't find a storage service which would allow me encrypting the
+data (local encryption) and then uploading the information. Some software do that
+but they are not free software, so you cannot check if there is a hidden
+mechanism to decrypt your data.</p>
+<p>Actually I haven't carried out a state of the art on the different storage
+solutions, but I decided to work anyway on a software regarding the Ubuntu Cloud
+Storage Service. So I decided to start a new software with the encryption
+feature. I tried to do it as much platform compatible as I could.</p>
+<p>I've read about encryption in Ubuntu One Cloud by means encfs, but the only client
+of UbuntuOne is for Ubuntu (or linux), not for Osx or Windows.</p>
+<p>So <a href="https://github.com/deepbit/uOneCrypt">here</a> is the software.</p>
+<p>Usage is very simple, you just upload information to the cloud like if it was an
+FTP client and everything you store under the /CRYPT folder will be encrypted
+with your private key.</p>
+<p>I'm going to show the basic usage:</p>
+<p>We'll start with an empty storage account, (it's not neccesary, but let
+uOneCrypt to create /CRYPT by itself).</p>
+<p><img alt="empty account" src="/images/p2-1.jpg" title="Empty account" /></p>
+<pre><code>deepbits-iMac:uOneCrypt deepbit$ python uOneCrypt.py 
+uOneCrypt:/&gt; ls0G
+        Size | Node
+--------------------------------------------------------------------------------
+         --- | CRYPT/
+--------------------------------------------------------------------------------
+</code></pre>
+<p>Start the client and /CRYPT is created automatically</p>
+<p><img alt="/CRYPT created" src="/images/p2-2.jpg" title="/CRYPT creadet" /></p>
+<pre><code>uOneCrypt:/&gt; cd CRYPT
+uOneCrypt:/CRYPT&gt; ls
+        Size | Node
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+</code></pre>
+<p>There's nothing inside, so let's upload some content.</p>
+<pre><code>uOneCrypt:/CRYPT&gt; put uOneCrypt.py
+uOneCrypt:/CRYPT&gt; put uOne.cfg
+uOneCrypt:/CRYPT&gt; ls
+        Size | Node
+--------------------------------------------------------------------------------
+     30.5 Kb | uOneCrypt.py
+   328 Bytes | uOne.cfg
+--------------------------------------------------------------------------------
+</code></pre>
+<p><img alt="/CRYPT content" src="/images/p2-3.jpg" title="/CRYPT content" /></p>
+<p>The .ToC file contains the real names of the files and folers, DON'T DELETE THIS
+FILE NEVER!</p>
+<pre><code>uOneCrypt:/CRYPT&gt; cd ..
+uOneCrypt:/&gt; mkdir newDir
+Directory //newDir created
+
+uOneCrypt:/&gt; ls
+        Size | Node
+--------------------------------------------------------------------------------
+         --- | CRYPT/
+         --- | newDir/
+--------------------------------------------------------------------------------
+uOneCrypt:/&gt; put uOneCrypt.py
+uOneCrypt:/&gt; ls
+        Size | Node
+--------------------------------------------------------------------------------
+         --- | CRYPT/
+         --- | newDir/
+     30.4 Kb | uOneCrypt.py
+--------------------------------------------------------------------------------
+uOneCrypt:/&gt;
+</code></pre>
+<p><img alt="/ content" src="/images/p2-4.jpg" title="/ content" /></p>
+<pre><code>uOneCrypt:/&gt; help
+
+Documented commands (type help &lt;topic&gt;):
+========================================
+EOF  cd  del  dir  exit  get  ls  md  mkdir  put  quit  rd  rm  rmdir
+
+Undocumented commands:
+======================
+help
+</code></pre>
+<p>As you can see, the content outside /CRYPT is not encrypted (obviosly the data
+inside the file is encrypted, test it yourself)</p>
+<p>And that's all, I'd like to create a FUSE module in order to integrate this
+software as another filesystem either in Linux, or OSx or Windows.</p>
+<p>If you want to see any further features read the README on the 
+<a href="https://github.com/deepbit/uOneCrypt">project's page</a></p>
+<p>Any help will be wellcome! :)</p>
+		<div class="footer">&copy; 2011 deepbit | Design by Ethan Neuenswander | Powered by Poole </div>
+
+		</div>
+		</div>
+				
+	</body>
+
+</html>
